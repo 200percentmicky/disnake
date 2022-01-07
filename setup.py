@@ -64,7 +64,7 @@ packages = [ # This is 'disnake', but using 'discord' instead. ...I probably mig
 ]
 
 setup(
-    name="discord", # This is 'disnake', but using 'discord' instead. ...I probably might not need to change this...?
+    name="disnake",
     author="Rapptz, EQUENOS",
     url="https://github.com/DisnakeDev/disnake",
     project_urls={
