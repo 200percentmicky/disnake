@@ -40,8 +40,8 @@ from typing import (
     Union,
 )
 
-import disnake
-import disnake.utils
+import discord
+import discord.utils
 
 from ._types import _BaseCommand
 from .base_core import InvokableApplicationCommand
@@ -49,7 +49,7 @@ from .ctx_menus_core import InvokableMessageCommand, InvokableUserCommand
 from .slash_core import InvokableSlashCommand
 
 if TYPE_CHECKING:
-    from disnake.interactions import ApplicationCommandInteraction
+    from discord.interactions import ApplicationCommandInteraction
 
     from .bot import AutoShardedBot, AutoShardedInteractionBot, Bot, InteractionBot
     from .context import Context
@@ -65,7 +65,7 @@ __all__ = (
 CogT = TypeVar("CogT", bound="Cog")
 FuncT = TypeVar("FuncT", bound=Callable[..., Any])
 
-MISSING: Any = disnake.utils.MISSING
+MISSING: Any = discord.utils.MISSING
 
 
 def _cog_special_method(func: FuncT) -> FuncT:
@@ -661,7 +661,7 @@ class Cog(metaclass=CogMeta):
                 raise e
 
         if not hasattr(self.cog_load.__func__, "__cog_special_method__"):
-            bot.loop.create_task(disnake.utils.maybe_coroutine(self.cog_load))
+            bot.loop.create_task(discord.utils.maybe_coroutine(self.cog_load))
 
         # check if we're overriding the default
         if cls.bot_check is not Cog.bot_check:

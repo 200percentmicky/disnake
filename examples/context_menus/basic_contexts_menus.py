@@ -1,5 +1,5 @@
-import disnake
-from disnake.ext import commands
+import discord
+from discord.ext import commands
 
 bot = commands.Bot(
     command_prefix="$",
@@ -20,8 +20,8 @@ async def on_ready():
 # should only have one requierd argument, which is
 # an instance of ApplicationCommandInteraction.
 @bot.user_command(name="Avatar")  # optional
-async def avatar(inter: disnake.ApplicationCommandInteraction, user: disnake.User):
-    emb = disnake.Embed(title=f"{user}'s avatar")
+async def avatar(inter: discord.ApplicationCommandInteraction, user: discord.User):
+    emb = discord.Embed(title=f"{user}'s avatar")
     emb.set_image(url=user.display_avatar.url)
     await inter.response.send_message(embed=emb)
 
@@ -30,7 +30,7 @@ async def avatar(inter: disnake.ApplicationCommandInteraction, user: disnake.Use
 # should only have one requierd argument, which is
 # an instance of ApplicationCommandInteraction.
 @bot.message_command(name="Reverse")  # optional
-async def reverse(inter: disnake.ApplicationCommandInteraction, message: disnake.Message):
+async def reverse(inter: discord.ApplicationCommandInteraction, message: discord.Message):
     # Let's reverse it and send back
     await inter.response.send_message(message.content[::-1])
 

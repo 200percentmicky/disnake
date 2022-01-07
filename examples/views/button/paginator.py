@@ -1,13 +1,13 @@
 from typing import List
 
-import disnake
-from disnake.ext import commands
+import discord
+from discord.ext import commands
 
 bot = commands.Bot(command_prefix="-")
 
 # Defines a simple paginator of buttons for the embed.
-class Menu(disnake.ui.View):
-    def __init__(self, embeds: List[disnake.Embed]):
+class Menu(discord.ui.View):
+    def __init__(self, embeds: List[discord.Embed]):
         super().__init__(timeout=None)
 
         # Sets the embed list variable.
@@ -23,8 +23,8 @@ class Menu(disnake.ui.View):
         for i, embed in enumerate(self.embeds):
             embed.set_footer(text=f"Page {i + 1} of {len(self.embeds)}")
 
-    @disnake.ui.button(label="Previous page", emoji="◀️", style=disnake.ButtonStyle.red)
-    async def prev_page(self, button: disnake.ui.Button, interaction: disnake.MessageInteraction):
+    @discord.ui.button(label="Previous page", emoji="◀️", style=discord.ButtonStyle.red)
+    async def prev_page(self, button: discord.ui.Button, interaction: discord.MessageInteraction):
         # Decrements the embed count.
         self.embed_count -= 1
 
@@ -38,8 +38,8 @@ class Menu(disnake.ui.View):
 
         await interaction.response.edit_message(embed=embed, view=self)
 
-    @disnake.ui.button(label="Next page", emoji="▶️", style=disnake.ButtonStyle.green)
-    async def next_page(self, button: disnake.ui.Button, interaction: disnake.MessageInteraction):
+    @discord.ui.button(label="Next page", emoji="▶️", style=discord.ButtonStyle.green)
+    async def next_page(self, button: discord.ui.Button, interaction: discord.MessageInteraction):
         # Increments the embed count.
         self.embed_count += 1
 
@@ -59,20 +59,20 @@ async def paginator(ctx: commands.Context):
 
     # Creates the embeds as a list.
     embeds = [
-        disnake.Embed(
+        discord.Embed(
             title="Paginator example",
             description="This is the first embed.",
-            colour=disnake.Colour.random(),
+            colour=discord.Colour.random(),
         ),
-        disnake.Embed(
+        discord.Embed(
             title="Paginator example",
             description="This is the second embed.",
-            colour=disnake.Color.random(),
+            colour=discord.Color.random(),
         ),
-        disnake.Embed(
+        discord.Embed(
             title="Paginator example",
             description="This is the third embed.",
-            colour=disnake.Color.random(),
+            colour=discord.Color.random(),
         ),
     ]
 

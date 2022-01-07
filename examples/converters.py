@@ -2,17 +2,17 @@
 
 import typing
 
-import disnake
-from disnake.ext import commands
+import discord
+from discord.ext import commands
 
-intents = disnake.Intents.default()
+intents = discord.Intents.default()
 intents.members = True
 
 bot = commands.Bot("!", intents=intents)
 
 
 @bot.command()
-async def userinfo(ctx: commands.Context, user: disnake.User):
+async def userinfo(ctx: commands.Context, user: discord.User):
     # In the command signature above, you can see that the `user`
     # parameter is typehinted to `disnake.User`. This means that
     # during command invocation we will attempt to convert
@@ -41,7 +41,7 @@ async def userinfo_error(ctx: commands.Context, error: commands.CommandError):
 
 
 @bot.command()
-async def ignore(ctx: commands.Context, target: typing.Union[disnake.Member, disnake.TextChannel]):
+async def ignore(ctx: commands.Context, target: typing.Union[discord.Member, discord.TextChannel]):
     # This command signature utilises the `typing.Union` typehint.
     # The `commands` framework attempts a conversion of each type in this Union *in order*.
     # So, it will attempt to convert whatever is passed to `target` to a `disnake.Member` instance.
@@ -51,10 +51,10 @@ async def ignore(ctx: commands.Context, target: typing.Union[disnake.Member, dis
     # instead of `commands.BadArgument`.
 
     # To check the resulting type, `isinstance` is used
-    if isinstance(target, disnake.Member):
+    if isinstance(target, discord.Member):
         await ctx.send(f"Member found: {target.mention}, adding them to the ignore list.")
     elif isinstance(
-        target, disnake.TextChannel
+        target, discord.TextChannel
     ):  # this could be an `else` but for completeness' sake.
         await ctx.send(f"Channel found: {target.mention}, adding it to the ignore list.")
 

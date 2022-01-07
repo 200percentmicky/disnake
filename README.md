@@ -12,6 +12,8 @@ disnake
 
 A modern, easy to use, feature-rich, and async ready API wrapper for Discord written in Python.
 
+⚠ This fork changes the namespace from `disnake` to `discord` as an alternative to using the shim. This fork may benefit you if your bot is running Red V3, but understand that absolutely no support will be given if you utilize this fork.
+
 Key Features
 ------------
 

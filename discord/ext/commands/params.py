@@ -49,13 +49,13 @@ from typing import (
     overload,
 )
 
-import disnake
-from disnake.app_commands import Option, OptionChoice
-from disnake.channel import _channel_type_factory
-from disnake.enums import ChannelType, OptionType, try_enum_to_int
-from disnake.ext import commands
-from disnake.interactions import CommandInteraction
-from disnake.utils import maybe_coroutine
+import discord
+from discord.app_commands import Option, OptionChoice
+from discord.channel import _channel_type_factory
+from discord.enums import ChannelType, OptionType, try_enum_to_int
+from discord.ext import commands
+from discord.interactions import CommandInteraction
+from discord.utils import maybe_coroutine
 
 from . import errors
 from .converter import CONVERTER_MAPPING
@@ -291,15 +291,15 @@ class ParamInfo:
         str: 3,
         int: 4,
         bool: 5,
-        disnake.abc.User: 6,
-        disnake.User: 6,
-        disnake.Member: 6,
-        Union[disnake.User, disnake.Member]: 6,
+        discord.abc.User: 6,
+        discord.User: 6,
+        discord.Member: 6,
+        Union[discord.User, discord.Member]: 6,
         # channels handled separately
-        disnake.abc.GuildChannel: 7,
-        disnake.Role: 8,
-        Union[disnake.Member, disnake.Role]: 9,
-        disnake.abc.Snowflake: 9,
+        discord.abc.GuildChannel: 7,
+        discord.Role: 8,
+        Union[discord.Member, discord.Role]: 9,
+        discord.abc.Snowflake: 9,
         float: 10,
     }
     _registered_converters: ClassVar[Dict[type, Callable]] = {}
@@ -403,8 +403,8 @@ class ParamInfo:
 
     async def verify_type(self, inter: CommandInteraction, argument: Any) -> Any:
         """Check if a type of an argument is correct and possibly fix it"""
-        if issubclass(self.type, disnake.Member):
-            if isinstance(argument, disnake.Member):
+        if issubclass(self.type, discord.Member):
+            if isinstance(argument, discord.Member):
                 return argument
 
             raise errors.MemberNotFound(str(argument.id))
@@ -434,15 +434,15 @@ class ParamInfo:
             raise errors.ConversionError(self.converter, e) from e
 
     def _parse_enum(self, annotation: Any) -> None:
-        if isinstance(annotation, (EnumMeta, disnake.enums.EnumMeta)):
+        if isinstance(annotation, (EnumMeta, discord.enums.EnumMeta)):
             self.choices = [OptionChoice(name, value.value) for name, value in annotation.__members__.items()]  # type: ignore
         else:
             self.choices = [OptionChoice(str(i), i) for i in annotation.__args__]
 
         self.type = type(self.choices[0].value)
 
-    def _parse_guild_channel(self, *channels: Type[disnake.abc.GuildChannel]) -> None:
-        self.type = disnake.abc.GuildChannel
+    def _parse_guild_channel(self, *channels: Type[discord.abc.GuildChannel]) -> None:
+        self.type = discord.abc.GuildChannel
 
         if not self.channel_types:
             channel_types = set()
@@ -481,19 +481,19 @@ class ParamInfo:
         elif annotation in self.TYPES:
             self.type = annotation
         elif (
-            isinstance(annotation, (EnumMeta, disnake.enums.EnumMeta))
+            isinstance(annotation, (EnumMeta, discord.enums.EnumMeta))
             or get_origin(annotation) is Literal
         ):
             self._parse_enum(annotation)
         elif get_origin(annotation) in (Union, UnionType):
             args = annotation.__args__
-            if all(issubclass_(channel, disnake.abc.GuildChannel) for channel in args):
+            if all(issubclass_(channel, discord.abc.GuildChannel) for channel in args):
                 self._parse_guild_channel(*args)
             else:
                 raise TypeError(
                     "Unions for anything else other than channels or a mentionable are not supported"
                 )
-        elif issubclass_(annotation, disnake.abc.GuildChannel):
+        elif issubclass_(annotation, discord.abc.GuildChannel):
             self._parse_guild_channel(annotation)
         elif issubclass_(get_origin(annotation), collections.abc.Sequence):
             raise TypeError(
@@ -648,7 +648,7 @@ def collect_params(
     Returns: (`cog parameter`, `interaction parameter`, `param infos`, `injections`)
     """
     (cog_param, inter_param), parameters = isolate_self(function)
-    doc = disnake.utils.parse_docstring(function)["params"]
+    doc = discord.utils.parse_docstring(function)["params"]
 
     paraminfos: List[ParamInfo] = []
     injections: Dict[str, Injection] = {}
@@ -784,7 +784,7 @@ def expand_params(command: AnySlashCommand) -> List[Option]:
         if param.autocomplete:
             command.autocompleters[param.name] = param.autocomplete
 
-    if issubclass_(sig.parameters[inter_param].annotation, disnake.GuildCommandInteraction):
+    if issubclass_(sig.parameters[inter_param].annotation, discord.GuildCommandInteraction):
         command.guild_only = True
 
     return [param.to_option() for param in params]

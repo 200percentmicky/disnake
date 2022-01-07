@@ -1,5 +1,5 @@
-import disnake
-from disnake.ext import commands
+import discord
+from discord.ext import commands
 
 description = """This is a script wherein the user can input
                  a UserID as well as message content, and the
@@ -7,7 +7,7 @@ description = """This is a script wherein the user can input
                  specified user, so to speak."""
 
 intents = (
-    disnake.Intents.all()
+    discord.Intents.all()
 )  # Not limiting the permissions, since this is an example - set this accordingly.
 
 client = commands.Bot(command_prefix="!", description=description, intents=intents)
@@ -23,7 +23,7 @@ async def on_ready():
 @commands.has_permissions(
     administrator=True
 )  # To make sure that not everyone can use this command.
-async def userecho(ctx, member: disnake.Member, *, content):
+async def userecho(ctx, member: discord.Member, *, content):
 
     await ctx.message.delete()  # We don't want users to see who initiated the command, to make it more realistic :P
 

@@ -44,14 +44,14 @@ from typing import (
     Union,
 )
 
-import disnake
-from disnake.app_commands import (
+import discord
+from discord.app_commands import (
     ApplicationCommand,
     Option,
     PartialGuildApplicationCommandPermissions,
 )
-from disnake.custom_warnings import ConfigWarning, SyncWarning
-from disnake.enums import ApplicationCommandType
+from discord.custom_warnings import ConfigWarning, SyncWarning
+from discord.enums import ApplicationCommandType
 
 from . import errors
 from .base_core import InvokableApplicationCommand
@@ -71,7 +71,7 @@ if TYPE_CHECKING:
 
     from typing_extensions import Concatenate, ParamSpec
 
-    from disnake.interactions import ApplicationCommandInteraction
+    from discord.interactions import ApplicationCommandInteraction
 
     from ._types import Check, CoroFunc
 
@@ -85,7 +85,7 @@ if TYPE_CHECKING:
 
 __all__ = ("InteractionBotBase",)
 
-MISSING: Any = disnake.utils.MISSING
+MISSING: Any = discord.utils.MISSING
 
 T = TypeVar("T")
 CFT = TypeVar("CFT", bound="CoroFunc")
@@ -643,7 +643,7 @@ class InteractionBotBase(CommonBotBase):
         return global_cmds, guilds
 
     async def _cache_application_commands(self) -> None:
-        if not isinstance(self, disnake.Client):
+        if not isinstance(self, discord.Client):
             raise NotImplementedError(f"This method is only usable in disnake.Client subclasses")
 
         _, guilds = self._ordered_unsynced_commands(self._test_guilds)
@@ -674,7 +674,7 @@ class InteractionBotBase(CommonBotBase):
                 pass
 
     async def _sync_application_commands(self) -> None:
-        if not isinstance(self, disnake.Client):
+        if not isinstance(self, discord.Client):
             raise NotImplementedError(f"This method is only usable in disnake.Client subclasses")
 
         if not self._sync_commands or self._is_closed or self.loop.is_closed():
@@ -758,7 +758,7 @@ class InteractionBotBase(CommonBotBase):
 
     async def _cache_application_command_permissions(self) -> None:
         # This method is usually called once per bot start
-        if not isinstance(self, disnake.Client):
+        if not isinstance(self, discord.Client):
             raise NotImplementedError(f"This method is only usable in disnake.Client subclasses")
 
         guilds_to_cache = set()
@@ -788,7 +788,7 @@ class InteractionBotBase(CommonBotBase):
 
     async def _sync_application_command_permissions(self) -> None:
         # Assuming that permissions and commands are cached
-        if not isinstance(self, disnake.Client):
+        if not isinstance(self, discord.Client):
             raise NotImplementedError(f"This method is only usable in disnake.Client subclasses")
 
         if not self._sync_permissions or self._is_closed or self.loop.is_closed():
@@ -863,7 +863,7 @@ class InteractionBotBase(CommonBotBase):
             _log.debug(text)
 
     async def _prepare_application_commands(self) -> None:
-        if not isinstance(self, disnake.Client):
+        if not isinstance(self, discord.Client):
             raise NotImplementedError(f"Command sync is only possible in disnake.Client subclasses")
 
         self._sync_queued = True
@@ -875,7 +875,7 @@ class InteractionBotBase(CommonBotBase):
         self._sync_queued = False
 
     async def _delayed_command_sync(self) -> None:
-        if not isinstance(self, disnake.Client):
+        if not isinstance(self, discord.Client):
             raise NotImplementedError(f"This method is only usable in disnake.Client subclasses")
 
         if (
@@ -895,7 +895,7 @@ class InteractionBotBase(CommonBotBase):
         self._sync_queued = False
 
     def _schedule_app_command_preparation(self) -> None:
-        if not isinstance(self, disnake.Client):
+        if not isinstance(self, discord.Client):
             raise NotImplementedError(f"Command sync is only possible in disnake.Client subclasses")
 
         self.loop.create_task(
@@ -903,7 +903,7 @@ class InteractionBotBase(CommonBotBase):
         )
 
     def _schedule_delayed_command_sync(self) -> None:
-        if not isinstance(self, disnake.Client):
+        if not isinstance(self, discord.Client):
             raise NotImplementedError(f"This method is only usable in disnake.Client subclasses")
 
         self.loop.create_task(self._delayed_command_sync(), name="disnake: delayed_command_sync")
@@ -1204,7 +1204,7 @@ class InteractionBotBase(CommonBotBase):
             return True
 
         # type-checker doesn't distinguish between functions and methods
-        return await disnake.utils.async_all(f(inter) for f in checks)  # type: ignore
+        return await discord.utils.async_all(f(inter) for f in checks)  # type: ignore
 
     def before_slash_command_invoke(self, coro: CFT) -> CFT:
         """Similar to :meth:`Bot.before_invoke` but for slash commands."""
@@ -1319,7 +1319,7 @@ class InteractionBotBase(CommonBotBase):
                 # In this case, the blind spot is the interaction guild, let's fix it:
                 try:
                     await self.bulk_overwrite_guild_commands(interaction.guild_id, [])  # type: ignore
-                except disnake.HTTPException:
+                except discord.HTTPException:
                     pass
                 try:
                     # This part is in a separate try-except because we still should respond to the interaction
@@ -1329,7 +1329,7 @@ class InteractionBotBase(CommonBotBase):
                         "#app-command-sync.",
                         ephemeral=True,
                     )
-                except disnake.HTTPException:
+                except discord.HTTPException:
                     pass
                 return
 

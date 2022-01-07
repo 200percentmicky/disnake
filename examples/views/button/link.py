@@ -1,7 +1,7 @@
 from urllib.parse import quote_plus
 
-import disnake
-from disnake.ext import commands
+import discord
+from discord.ext import commands
 
 
 class GoogleBot(commands.Bot):
@@ -15,7 +15,7 @@ class GoogleBot(commands.Bot):
 
 # Define a simple View that gives us a google link button.
 # We take in `query` as the query that the command author requests for
-class Google(disnake.ui.View):
+class Google(discord.ui.View):
     def __init__(self, query: str):
         super().__init__()
         # we need to quote the query string to make a valid url. Discord will raise an error if it isn't valid.
@@ -25,7 +25,7 @@ class Google(disnake.ui.View):
         # Link buttons cannot be made with the decorator
         # Therefore we have to manually create one.
         # We add the quoted url to the button, and add the button to the view.
-        self.add_item(disnake.ui.Button(label="Click Here", url=url))
+        self.add_item(discord.ui.Button(label="Click Here", url=url))
 
 
 bot = GoogleBot()

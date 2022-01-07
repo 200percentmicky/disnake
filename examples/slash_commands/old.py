@@ -2,8 +2,8 @@
 An example of old-style options.
 Not the most convenient syntax.
 """
-import disnake
-from disnake.ext import commands
+import discord
+from discord.ext import commands
 
 bot = commands.Bot("!")
 
@@ -12,12 +12,12 @@ bot = commands.Bot("!")
     name="slash_command",
     description="A Simple Slash Command",
     options=[
-        disnake.Option("string", description="A string to send", required=True),
-        disnake.Option(
-            "channel", description="The destination channel", type=disnake.OptionType.channel
+        discord.Option("string", description="A string to send", required=True),
+        discord.Option(
+            "channel", description="The destination channel", type=discord.OptionType.channel
         ),
-        disnake.Option(
-            "number", description="The number of repetitions", type=disnake.OptionType.integer
+        discord.Option(
+            "number", description="The number of repetitions", type=discord.OptionType.integer
         ),
     ],
 )

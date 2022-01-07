@@ -33,7 +33,7 @@ import sys
 import traceback
 from typing import TYPE_CHECKING, Any, Callable, List, Optional, Type, TypeVar, Union
 
-import disnake
+import discord
 
 from . import errors
 from .common_bot_base import CommonBotBase
@@ -46,8 +46,8 @@ if TYPE_CHECKING:
 
     from typing_extensions import ParamSpec
 
-    from disnake.interactions import ApplicationCommandInteraction
-    from disnake.message import Message
+    from discord.interactions import ApplicationCommandInteraction
+    from discord.message import Message
 
     from ._types import Check, CoroFunc
 
@@ -65,7 +65,7 @@ __all__ = (
     "BotBase",
 )
 
-MISSING: Any = disnake.utils.MISSING
+MISSING: Any = discord.utils.MISSING
 
 T = TypeVar("T")
 CFT = TypeVar("CFT", bound="CoroFunc")
@@ -316,7 +316,7 @@ class BotBase(CommonBotBase, GroupMixin):
             return True
 
         # type-checker doesn't distinguish between functions and methods
-        return await disnake.utils.async_all(f(ctx) for f in data)  # type: ignore
+        return await discord.utils.async_all(f(ctx) for f in data)  # type: ignore
 
     def before_invoke(self, coro: CFT) -> CFT:
         """A decorator that registers a coroutine as a pre-invoke hook.
@@ -436,7 +436,7 @@ class BotBase(CommonBotBase, GroupMixin):
         """
         prefix = ret = self.command_prefix
         if callable(prefix):
-            ret = await disnake.utils.maybe_coroutine(prefix, self, message)
+            ret = await discord.utils.maybe_coroutine(prefix, self, message)
 
         if ret is None:
             return None
@@ -509,7 +509,7 @@ class BotBase(CommonBotBase, GroupMixin):
                 # if the context class' __init__ consumes something from the view this
                 # will be wrong.  That seems unreasonable though.
                 if message.content.startswith(tuple(prefix)):
-                    invoked_prefix = disnake.utils.find(view.skip_string, prefix)
+                    invoked_prefix = discord.utils.find(view.skip_string, prefix)
                 else:
                     return ctx
 

@@ -47,8 +47,8 @@ from typing import (
     Union,
 )
 
-import disnake
-import disnake.utils
+import discord
+import discord.utils
 
 from . import errors
 from .cog import Cog
@@ -67,7 +67,7 @@ CogT = TypeVar("CogT", bound="Cog")
 FuncT = TypeVar("FuncT", bound=Callable[..., Any])
 CFT = TypeVar("CFT", bound="CoroFunc")
 
-MISSING: Any = disnake.utils.MISSING
+MISSING: Any = discord.utils.MISSING
 
 
 def _is_submodule(parent: str, child: str) -> bool:
@@ -83,8 +83,8 @@ class CommonBotBase(Generic[CogT]):
 
         self.owner_id: Optional[int] = kwargs.get("owner_id")
         self.owner_ids: Set[int] = kwargs.get("owner_ids", set())
-        self.owner: Optional[disnake.User] = None
-        self.owners: Set[disnake.TeamMember] = set()
+        self.owner: Optional[discord.User] = None
+        self.owners: Set[discord.TeamMember] = set()
 
         if self.owner_id and self.owner_ids:
             raise TypeError("Both owner_id and owner_ids are set.")
@@ -140,7 +140,7 @@ class CommonBotBase(Generic[CogT]):
 
         await super().close()  # type: ignore
 
-    async def is_owner(self, user: Union[disnake.User, disnake.Member]) -> bool:
+    async def is_owner(self, user: Union[discord.User, discord.Member]) -> bool:
         """|coro|
 
         Checks if a :class:`~disnake.User` or :class:`~disnake.Member` is the owner of
@@ -309,7 +309,7 @@ class CommonBotBase(Generic[CogT]):
 
         if existing is not None:
             if not override:
-                raise disnake.ClientException(f"Cog named {cog_name!r} already loaded")
+                raise discord.ClientException(f"Cog named {cog_name!r} already loaded")
             self.remove_cog(cog_name)
 
         # NOTE: Should be covariant
@@ -602,7 +602,7 @@ class CommonBotBase(Generic[CogT]):
         Starts the bot watchdog which will watch currently loaded extensions
         and reload them when they're modified.
         """
-        if isinstance(self, disnake.Client):
+        if isinstance(self, discord.Client):
             await self.wait_until_ready()
 
         reload_log = logging.getLogger(__name__)
@@ -611,7 +611,7 @@ class CommonBotBase(Generic[CogT]):
             logging.basicConfig()
             reload_log.setLevel(logging.INFO)
 
-        if isinstance(self, disnake.Client):
+        if isinstance(self, discord.Client):
             is_closed = self.is_closed
         else:
             is_closed = lambda: False

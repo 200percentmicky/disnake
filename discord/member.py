@@ -44,7 +44,7 @@ from typing import (
     overload,
 )
 
-import disnake.abc
+import discord.abc
 
 from . import utils
 from .activity import ActivityTypes, create_activity
@@ -228,7 +228,7 @@ M = TypeVar("M", bound="Member")
 
 
 @flatten_user
-class Member(disnake.abc.Messageable, _UserTag):
+class Member(discord.abc.Messageable, _UserTag):
     """Represents a Discord member to a :class:`Guild`.
 
     This implements a lot of the functionality of :class:`User`.
@@ -711,7 +711,7 @@ class Member(disnake.abc.Messageable, _UserTag):
         mute: bool = MISSING,
         deafen: bool = MISSING,
         suppress: bool = MISSING,
-        roles: List[disnake.abc.Snowflake] = MISSING,
+        roles: List[discord.abc.Snowflake] = MISSING,
         voice_channel: Optional[VocalGuildChannel] = MISSING,
         timeout: Optional[Union[float, datetime.timedelta, datetime.datetime]] = MISSING,
         reason: Optional[str] = None,

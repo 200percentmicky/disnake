@@ -44,7 +44,7 @@ from typing import (
     overload,
 )
 
-import disnake.abc
+import discord.abc
 
 from . import utils
 from .asset import Asset
@@ -105,7 +105,7 @@ async def _single_delete_strategy(messages: Iterable[Message]):
         await m.delete()
 
 
-class TextChannel(disnake.abc.Messageable, disnake.abc.GuildChannel, Hashable):
+class TextChannel(discord.abc.Messageable, discord.abc.GuildChannel, Hashable):
     """Represents a Discord guild text channel.
 
     .. container:: operations
@@ -224,7 +224,7 @@ class TextChannel(disnake.abc.Messageable, disnake.abc.GuildChannel, Hashable):
     def _sorting_bucket(self) -> int:
         return ChannelType.text.value
 
-    @utils.copy_doc(disnake.abc.GuildChannel.permissions_for)
+    @utils.copy_doc(discord.abc.GuildChannel.permissions_for)
     def permissions_for(self, obj: Union[Member, Role], /) -> Permissions:
         base = super().permissions_for(obj)
 
@@ -374,7 +374,7 @@ class TextChannel(disnake.abc.Messageable, disnake.abc.GuildChannel, Hashable):
             # the payload will always be the proper channel payload
             return self.__class__(state=self._state, guild=self.guild, data=payload)  # type: ignore
 
-    @utils.copy_doc(disnake.abc.GuildChannel.clone)
+    @utils.copy_doc(discord.abc.GuildChannel.clone)
     async def clone(
         self, *, name: Optional[str] = None, reason: Optional[str] = None
     ) -> TextChannel:
@@ -845,7 +845,7 @@ class TextChannel(disnake.abc.Messageable, disnake.abc.GuildChannel, Hashable):
         )
 
 
-class VocalGuildChannel(disnake.abc.Connectable, disnake.abc.GuildChannel, Hashable):
+class VocalGuildChannel(discord.abc.Connectable, discord.abc.GuildChannel, Hashable):
     __slots__ = (
         "name",
         "id",
@@ -932,7 +932,7 @@ class VocalGuildChannel(disnake.abc.Connectable, disnake.abc.GuildChannel, Hasha
         }
         # fmt: on
 
-    @utils.copy_doc(disnake.abc.GuildChannel.permissions_for)
+    @utils.copy_doc(discord.abc.GuildChannel.permissions_for)
     def permissions_for(self, obj: Union[Member, Role], /) -> Permissions:
         base = super().permissions_for(obj)
 
@@ -945,7 +945,7 @@ class VocalGuildChannel(disnake.abc.Connectable, disnake.abc.GuildChannel, Hasha
         return base
 
 
-class VoiceChannel(disnake.abc.Messageable, VocalGuildChannel):
+class VoiceChannel(discord.abc.Messageable, VocalGuildChannel):
     """Represents a Discord guild voice channel.
 
     .. container:: operations
@@ -1047,7 +1047,7 @@ class VoiceChannel(disnake.abc.Messageable, VocalGuildChannel):
         """:class:`ChannelType`: The channel's Discord type."""
         return ChannelType.voice
 
-    @utils.copy_doc(disnake.abc.GuildChannel.clone)
+    @utils.copy_doc(discord.abc.GuildChannel.clone)
     async def clone(
         self, *, name: Optional[str] = None, reason: Optional[str] = None
     ) -> VoiceChannel:
@@ -1326,7 +1326,7 @@ class StageChannel(VocalGuildChannel):
         """:class:`ChannelType`: The channel's Discord type."""
         return ChannelType.stage_voice
 
-    @utils.copy_doc(disnake.abc.GuildChannel.clone)
+    @utils.copy_doc(discord.abc.GuildChannel.clone)
     async def clone(
         self, *, name: Optional[str] = None, reason: Optional[str] = None
     ) -> StageChannel:
@@ -1494,7 +1494,7 @@ class StageChannel(VocalGuildChannel):
             return self.__class__(state=self._state, guild=self.guild, data=payload)  # type: ignore
 
 
-class CategoryChannel(disnake.abc.GuildChannel, Hashable):
+class CategoryChannel(discord.abc.GuildChannel, Hashable):
     """Represents a Discord channel category.
 
     These are useful to group channels to logical compartments.
@@ -1570,7 +1570,7 @@ class CategoryChannel(disnake.abc.GuildChannel, Hashable):
         """
         return self.nsfw
 
-    @utils.copy_doc(disnake.abc.GuildChannel.clone)
+    @utils.copy_doc(discord.abc.GuildChannel.clone)
     async def clone(
         self, *, name: Optional[str] = None, reason: Optional[str] = None
     ) -> CategoryChannel:
@@ -1641,7 +1641,7 @@ class CategoryChannel(disnake.abc.GuildChannel, Hashable):
             # the payload will always be the proper channel payload
             return self.__class__(state=self._state, guild=self.guild, data=payload)  # type: ignore
 
-    @utils.copy_doc(disnake.abc.GuildChannel.move)
+    @utils.copy_doc(discord.abc.GuildChannel.move)
     async def move(self, **kwargs):
         kwargs.pop("category", None)
         await super().move(**kwargs)
@@ -1744,7 +1744,7 @@ class NewsChannel(TextChannel):
     type: ChannelType = ChannelType.news
 
 
-class StoreChannel(disnake.abc.GuildChannel, Hashable):
+class StoreChannel(discord.abc.GuildChannel, Hashable):
     """Represents a Discord guild store channel.
 
     .. container:: operations
@@ -1822,7 +1822,7 @@ class StoreChannel(disnake.abc.GuildChannel, Hashable):
         """:class:`ChannelType`: The channel's Discord type."""
         return ChannelType.store
 
-    @utils.copy_doc(disnake.abc.GuildChannel.permissions_for)
+    @utils.copy_doc(discord.abc.GuildChannel.permissions_for)
     def permissions_for(self, obj: Union[Member, Role], /) -> Permissions:
         base = super().permissions_for(obj)
 
@@ -1838,7 +1838,7 @@ class StoreChannel(disnake.abc.GuildChannel, Hashable):
         """
         return self.nsfw
 
-    @utils.copy_doc(disnake.abc.GuildChannel.clone)
+    @utils.copy_doc(discord.abc.GuildChannel.clone)
     async def clone(
         self, *, name: Optional[str] = None, reason: Optional[str] = None
     ) -> StoreChannel:
@@ -1921,7 +1921,7 @@ class StoreChannel(disnake.abc.GuildChannel, Hashable):
 DMC = TypeVar("DMC", bound="DMChannel")
 
 
-class DMChannel(disnake.abc.Messageable, Hashable):
+class DMChannel(discord.abc.Messageable, Hashable):
     """Represents a Discord direct message channel.
 
     .. container:: operations
@@ -2047,7 +2047,7 @@ class DMChannel(disnake.abc.Messageable, Hashable):
         return PartialMessage(channel=self, id=message_id)
 
 
-class GroupChannel(disnake.abc.Messageable, Hashable):
+class GroupChannel(discord.abc.Messageable, Hashable):
     """Represents a Discord group channel.
 
     .. container:: operations
@@ -2192,7 +2192,7 @@ class GroupChannel(disnake.abc.Messageable, Hashable):
         await self._state.http.leave_group(self.id)
 
 
-class PartialMessageable(disnake.abc.Messageable, Hashable):
+class PartialMessageable(discord.abc.Messageable, Hashable):
     """Represents a partial messageable to aid with working messageable channels when
     only a channel ID are present.
 
@@ -2297,11 +2297,11 @@ def _threaded_guild_channel_factory(channel_type: int):
     return cls, value
 
 
-def _channel_type_factory(cls: Type[disnake.abc.GuildChannel]) -> List[ChannelType]:
+def _channel_type_factory(cls: Type[discord.abc.GuildChannel]) -> List[ChannelType]:
     return {
-        disnake.abc.GuildChannel: list(ChannelType.__members__.values()),
+        discord.abc.GuildChannel: list(ChannelType.__members__.values()),
         VocalGuildChannel: [ChannelType.voice, ChannelType.stage_voice],
-        disnake.abc.PrivateChannel: [ChannelType.private, ChannelType.group],
+        discord.abc.PrivateChannel: [ChannelType.private, ChannelType.group],
         TextChannel: [ChannelType.text, ChannelType.news],
         DMChannel: [ChannelType.private],
         VoiceChannel: [ChannelType.voice],

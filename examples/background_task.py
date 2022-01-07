@@ -1,8 +1,8 @@
-import disnake
-from disnake.ext import tasks
+import discord
+from discord.ext import tasks
 
 
-class MyClient(disnake.Client):
+class MyClient(discord.Client):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
@@ -25,7 +25,7 @@ class MyClient(disnake.Client):
     async def before_my_task(self):
         await self.wait_until_ready()  # wait until the bot logs in
         channel = self.get_channel(1234567)  # channel ID goes here
-        if not isinstance(channel, disnake.TextChannel):
+        if not isinstance(channel, discord.TextChannel):
             raise ValueError("Invalid channel")
 
         self.channel = channel

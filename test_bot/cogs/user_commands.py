@@ -1,5 +1,5 @@
-import disnake
-from disnake.ext import commands
+import discord
+from discord.ext import commands
 
 
 class UserCommands(commands.Cog):
@@ -7,7 +7,7 @@ class UserCommands(commands.Cog):
         self.bot: commands.Bot = bot
 
     @commands.user_command(name="Avatar")
-    async def avatar(self, inter: disnake.UserCommandInteraction, user: disnake.User):
+    async def avatar(self, inter: discord.UserCommandInteraction, user: discord.User):
         await inter.response.send_message(user.display_avatar.url, ephemeral=True)
 
 

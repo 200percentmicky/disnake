@@ -1,5 +1,5 @@
-import disnake
-from disnake.ext import commands
+import discord
+from discord.ext import commands
 
 bot = commands.Bot("!")
 
@@ -15,7 +15,7 @@ bot = commands.Bot("!")
 # disnake takes care of parsing the annotation and adding a description for it.
 @bot.slash_command()
 async def simple(
-    inter: disnake.CommandInteraction,
+    inter: discord.CommandInteraction,
     required: str,
     optional: int = 0,
 ):
@@ -26,25 +26,25 @@ async def simple(
 # You can also use various other types like User, Member, Role, TextChannel, Emoji, ...
 @bot.slash_command()
 async def other_types(
-    inter: disnake.CommandInteraction,
-    user: disnake.User,
-    emoji: disnake.Emoji,
+    inter: discord.CommandInteraction,
+    user: discord.User,
+    emoji: discord.Emoji,
 ):
     ...
 
 
 # Adding descriptions is very simple, just use the docstring
 @bot.slash_command()
-async def description(inter: disnake.CommandInteraction, user: disnake.User):
+async def description(inter: discord.CommandInteraction, user: discord.User):
     """A random command"""
 
 
 # Options can also be added into the docstring
 @bot.slash_command()
 async def full_description(
-    inter: disnake.CommandInteraction,
-    user: disnake.User,
-    channel: disnake.TextChannel,
+    inter: discord.CommandInteraction,
+    user: discord.User,
+    channel: discord.TextChannel,
 ):
     """A random command
 
@@ -60,9 +60,9 @@ async def full_description(
 # This is so the annotation actually stays correct.
 @bot.slash_command()
 async def defaults(
-    inter: disnake.CommandInteraction,
+    inter: discord.CommandInteraction,
     string: str = None,
-    user: disnake.User = commands.Param(lambda inter: inter.author),
+    user: discord.User = commands.Param(lambda inter: inter.author),
 ):
     ...
 
@@ -72,7 +72,7 @@ async def defaults(
 # The 1.0 in fraction is very important, the usage of a float says that the argument may be any float in that range.
 @bot.slash_command()
 async def ranges(
-    inter: disnake.CommandInteraction,
+    inter: discord.CommandInteraction,
     ranking: commands.Range[1, 10],
     negative: commands.Range[..., 0],
     fraction: commands.Range[0, 1.0],

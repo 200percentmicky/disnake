@@ -1,7 +1,7 @@
 import random
 
-import disnake
-from disnake.ext import commands
+import discord
+from discord.ext import commands
 
 
 class MyContext(commands.Context):
@@ -14,7 +14,7 @@ class MyContext(commands.Context):
         try:
             # this will react to the command author's message
             await self.message.add_reaction(emoji)
-        except disnake.HTTPException:
+        except discord.HTTPException:
             # sometimes errors occur during this, for example
             # maybe you don't have permission to do that
             # we don't mind, so we can just ignore them

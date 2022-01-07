@@ -37,10 +37,10 @@ from typing import (
     Union,
 )
 
-from disnake import utils
-from disnake.app_commands import Option, SlashCommand
-from disnake.enums import OptionType
-from disnake.interactions import ApplicationCommandInteraction
+from discord import utils
+from discord.app_commands import Option, SlashCommand
+from discord.enums import OptionType
+from discord.interactions import ApplicationCommandInteraction
 
 from .base_core import InvokableApplicationCommand, _get_overridden_method
 from .errors import *

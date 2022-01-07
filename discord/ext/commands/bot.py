@@ -27,7 +27,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, TypeVar
 
-import disnake
+import discord
 
 from .bot_base import BotBase, when_mentioned, when_mentioned_or
 from .context import Context
@@ -37,7 +37,7 @@ if TYPE_CHECKING:
 
     from typing_extensions import ParamSpec
 
-    from disnake.interactions import ApplicationCommandInteraction
+    from discord.interactions import ApplicationCommandInteraction
 
     from ._types import CoroFunc
 
@@ -59,14 +59,14 @@ __all__ = (
     "AutoShardedInteractionBot",
 )
 
-MISSING: Any = disnake.utils.MISSING
+MISSING: Any = discord.utils.MISSING
 
 T = TypeVar("T")
 CFT = TypeVar("CFT", bound="CoroFunc")
 CXT = TypeVar("CXT", bound="Context")
 
 
-class Bot(BotBase, InteractionBotBase, disnake.Client):
+class Bot(BotBase, InteractionBotBase, discord.Client):
     """Represents a discord bot.
 
     This class is a subclass of :class:`disnake.Client` and as a result
@@ -176,7 +176,7 @@ class Bot(BotBase, InteractionBotBase, disnake.Client):
     pass
 
 
-class AutoShardedBot(BotBase, InteractionBotBase, disnake.AutoShardedClient):
+class AutoShardedBot(BotBase, InteractionBotBase, discord.AutoShardedClient):
     """This is similar to :class:`.Bot` except that it is inherited from
     :class:`disnake.AutoShardedClient` instead.
     """
@@ -184,7 +184,7 @@ class AutoShardedBot(BotBase, InteractionBotBase, disnake.AutoShardedClient):
     pass
 
 
-class InteractionBot(InteractionBotBase, disnake.Client):
+class InteractionBot(InteractionBotBase, discord.Client):
     """Represents a discord bot for application commands only.
 
     This class is a subclass of :class:`disnake.Client` and as a result
@@ -249,7 +249,7 @@ class InteractionBot(InteractionBotBase, disnake.Client):
     pass
 
 
-class AutoShardedInteractionBot(InteractionBotBase, disnake.AutoShardedClient):
+class AutoShardedInteractionBot(InteractionBotBase, discord.AutoShardedClient):
     """This is similar to :class:`.InteractionBot` except that it is inherited from
     :class:`disnake.AutoShardedClient` instead.
     """

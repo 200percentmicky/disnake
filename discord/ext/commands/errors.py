@@ -27,14 +27,14 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Callable, List, Optional, Tuple, Type, Union
 
-from disnake.errors import ClientException, DiscordException
+from discord.errors import ClientException, DiscordException
 
 if TYPE_CHECKING:
     from inspect import Parameter
 
-    from disnake.abc import GuildChannel
-    from disnake.threads import Thread
-    from disnake.types.snowflake import Snowflake, SnowflakeList
+    from discord.abc import GuildChannel
+    from discord.threads import Thread
+    from discord.types.snowflake import Snowflake, SnowflakeList
 
     from .context import Context
     from .converter import Converter

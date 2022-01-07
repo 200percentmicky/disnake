@@ -1,7 +1,7 @@
-import disnake
+import discord
 
 
-class MyClient(disnake.Client):
+class MyClient(discord.Client):
     async def on_ready(self):
         print(f"Logged in as {self.user} (ID: {self.user.id})")
         print("------")

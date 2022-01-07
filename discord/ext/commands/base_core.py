@@ -28,9 +28,9 @@ import functools
 from abc import ABC
 from typing import TYPE_CHECKING, Any, Callable, Dict, List, Mapping, Optional, TypeVar
 
-from disnake.app_commands import ApplicationCommand, UnresolvedGuildApplicationCommandPermissions
-from disnake.enums import ApplicationCommandType
-from disnake.utils import async_all, maybe_coroutine, warn_deprecated
+from discord.app_commands import ApplicationCommand, UnresolvedGuildApplicationCommandPermissions
+from discord.enums import ApplicationCommandType
+from discord.utils import async_all, maybe_coroutine, warn_deprecated
 
 from .cooldowns import BucketType, CooldownMapping, MaxConcurrency
 from .errors import *
@@ -38,7 +38,7 @@ from .errors import *
 if TYPE_CHECKING:
     from typing_extensions import ParamSpec
 
-    from disnake.interactions import ApplicationCommandInteraction
+    from discord.interactions import ApplicationCommandInteraction
 
     from ._types import Check, Error, Hook
     from .cog import Cog

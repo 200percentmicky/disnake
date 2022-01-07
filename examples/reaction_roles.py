@@ -1,22 +1,22 @@
 # This example requires the 'members' privileged intents
 
-import disnake
+import discord
 
 
-class MyClient(disnake.Client):
+class MyClient(discord.Client):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self.role_message_id = 0  # ID of the message that can be reacted to to add/remove a role.
         self.emoji_to_role = {
-            disnake.PartialEmoji(name="🔴"): 0,  # ID of the role associated with unicode emoji '🔴'.
-            disnake.PartialEmoji(name="🟡"): 0,  # ID of the role associated with unicode emoji '🟡'.
-            disnake.PartialEmoji(
+            discord.PartialEmoji(name="🔴"): 0,  # ID of the role associated with unicode emoji '🔴'.
+            discord.PartialEmoji(name="🟡"): 0,  # ID of the role associated with unicode emoji '🟡'.
+            discord.PartialEmoji(
                 name="green", id=0
             ): 0,  # ID of the role associated with a partial emoji's ID.
         }
 
-    async def on_raw_reaction_add(self, payload: disnake.RawReactionActionEvent):
+    async def on_raw_reaction_add(self, payload: discord.RawReactionActionEvent):
         """Gives a role based on a reaction emoji."""
         if payload.guild_id is None or payload.member is None:
             return
@@ -44,11 +44,11 @@ class MyClient(disnake.Client):
         try:
             # Finally, add the role.
             await payload.member.add_roles(role)
-        except disnake.HTTPException:
+        except discord.HTTPException:
             # If we want to do something in case of errors we'd do it here.
             pass
 
-    async def on_raw_reaction_remove(self, payload: disnake.RawReactionActionEvent):
+    async def on_raw_reaction_remove(self, payload: discord.RawReactionActionEvent):
         """Removes a role based on a reaction emoji."""
         if payload.guild_id is None:
             return
@@ -82,12 +82,12 @@ class MyClient(disnake.Client):
         try:
             # Finally, remove the role.
             await member.remove_roles(role)
-        except disnake.HTTPException:
+        except discord.HTTPException:
             # If we want to do something in case of errors we'd do it here.
             pass
 
 
-intents = disnake.Intents.default()
+intents = discord.Intents.default()
 intents.members = True
 
 client = MyClient(intents=intents)

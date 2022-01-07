@@ -2,15 +2,15 @@
 
 import random
 
-import disnake
-from disnake.ext import commands
+import discord
+from discord.ext import commands
 
 description = """An example bot to showcase the disnake.ext.commands extension
 module.
 
 There are a number of utility commands being showcased here."""
 
-intents = disnake.Intents.default()
+intents = discord.Intents.default()
 intents.members = True
 
 bot = commands.Bot(command_prefix="?", description=description, intents=intents)
@@ -55,7 +55,7 @@ async def repeat(ctx, times: int, content="repeating..."):
 
 
 @bot.command()
-async def joined(ctx, member: disnake.Member):
+async def joined(ctx, member: discord.Member):
     """Says when a member joined."""
     await ctx.send(f"{member.name} joined in {member.joined_at}")
 

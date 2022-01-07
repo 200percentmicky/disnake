@@ -1,5 +1,5 @@
-import disnake
-from disnake.ext import commands
+import discord
+from discord.ext import commands
 
 
 class Bot(commands.Bot):
@@ -12,7 +12,7 @@ class Bot(commands.Bot):
 
 
 # Define a simple View that gives us a confirmation menu
-class Confirm(disnake.ui.View):
+class Confirm(discord.ui.View):
     def __init__(self):
         super().__init__()
         self.value = None
@@ -20,15 +20,15 @@ class Confirm(disnake.ui.View):
     # When the confirm button is pressed, set the inner value to `True` and
     # stop the View from listening to more input.
     # We also send the user an ephemeral message that we're confirming their choice.
-    @disnake.ui.button(label="Confirm", style=disnake.ButtonStyle.green)
-    async def confirm(self, button: disnake.ui.Button, interaction: disnake.MessageInteraction):
+    @discord.ui.button(label="Confirm", style=discord.ButtonStyle.green)
+    async def confirm(self, button: discord.ui.Button, interaction: discord.MessageInteraction):
         await interaction.response.send_message("Confirming", ephemeral=True)
         self.value = True
         self.stop()
 
     # This one is similar to the confirmation button except sets the inner value to `False`
-    @disnake.ui.button(label="Cancel", style=disnake.ButtonStyle.grey)
-    async def cancel(self, button: disnake.ui.Button, interaction: disnake.MessageInteraction):
+    @discord.ui.button(label="Cancel", style=discord.ButtonStyle.grey)
+    async def cancel(self, button: discord.ui.Button, interaction: discord.MessageInteraction):
         await interaction.response.send_message("Cancelling", ephemeral=True)
         self.value = False
         self.stop()

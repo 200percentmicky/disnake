@@ -1,5 +1,5 @@
-import disnake
-from disnake.ext import commands
+import discord
+from discord.ext import commands
 
 
 # Define a simple View that persists between bot restarts
@@ -10,24 +10,24 @@ from disnake.ext import commands
 # prevent conflicts with other buttons the bot sends.
 # For this example the custom_id is prefixed with the name of the bot.
 # Note that custom_ids can only be up to 100 characters long.
-class PersistentView(disnake.ui.View):
+class PersistentView(discord.ui.View):
     def __init__(self):
         super().__init__(timeout=None)
 
-    @disnake.ui.button(
-        label="Green", style=disnake.ButtonStyle.green, custom_id="persistent_view:green"
+    @discord.ui.button(
+        label="Green", style=discord.ButtonStyle.green, custom_id="persistent_view:green"
     )
-    async def green(self, button: disnake.ui.Button, interaction: disnake.MessageInteraction):
+    async def green(self, button: discord.ui.Button, interaction: discord.MessageInteraction):
         await interaction.response.send_message("This is green.", ephemeral=True)
 
-    @disnake.ui.button(label="Red", style=disnake.ButtonStyle.red, custom_id="persistent_view:red")
-    async def red(self, button: disnake.ui.Button, interaction: disnake.MessageInteraction):
+    @discord.ui.button(label="Red", style=discord.ButtonStyle.red, custom_id="persistent_view:red")
+    async def red(self, button: discord.ui.Button, interaction: discord.MessageInteraction):
         await interaction.response.send_message("This is red.", ephemeral=True)
 
-    @disnake.ui.button(
-        label="Grey", style=disnake.ButtonStyle.grey, custom_id="persistent_view:grey"
+    @discord.ui.button(
+        label="Grey", style=discord.ButtonStyle.grey, custom_id="persistent_view:grey"
     )
-    async def grey(self, button: disnake.ui.Button, interaction: disnake.MessageInteraction):
+    async def grey(self, button: discord.ui.Button, interaction: discord.MessageInteraction):
         await interaction.response.send_message("This is grey.", ephemeral=True)
 
 

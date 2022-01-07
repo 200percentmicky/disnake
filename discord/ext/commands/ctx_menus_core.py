@@ -25,7 +25,7 @@ from __future__ import annotations
 import asyncio
 from typing import TYPE_CHECKING, Any, Callable, Coroutine, Optional, Sequence, TypeVar, Union
 
-from disnake.app_commands import MessageCommand, UserCommand
+from discord.app_commands import MessageCommand, UserCommand
 
 from .base_core import InvokableApplicationCommand, _get_overridden_method
 from .errors import *
@@ -34,7 +34,7 @@ from .params import safe_call
 if TYPE_CHECKING:
     from typing_extensions import Concatenate, ParamSpec
 
-    from disnake.interactions import ApplicationCommandInteraction
+    from discord.interactions import ApplicationCommandInteraction
 
     ApplicationCommandInteractionT = TypeVar(
         "ApplicationCommandInteractionT", bound=ApplicationCommandInteraction, covariant=True

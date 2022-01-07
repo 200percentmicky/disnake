@@ -1,11 +1,11 @@
-import disnake
-from disnake.ext import commands
+import discord
+from discord.ext import commands
 
 bot = commands.Bot(command_prefix=commands.when_mentioned_or("!"))
 
 
-class MyView(disnake.ui.View):
-    message: disnake.Message
+class MyView(discord.ui.View):
+    message: discord.Message
 
     def __init__(self):
         super().__init__(timeout=30.0)
@@ -17,12 +17,12 @@ class MyView(disnake.ui.View):
         # make sure to update the message with the new buttons
         await self.message.edit(view=self)
 
-    @disnake.ui.button(label="Click to disable the view", style=disnake.ButtonStyle.red)
-    async def disable(self, button: disnake.ui.Button, interaction: disnake.MessageInteraction):
+    @discord.ui.button(label="Click to disable the view", style=discord.ButtonStyle.red)
+    async def disable(self, button: discord.ui.Button, interaction: discord.MessageInteraction):
 
         # We disable every single component in this view
         for child in self.children:
-            if isinstance(child, disnake.ui.Button):
+            if isinstance(child, discord.ui.Button):
                 child.disabled = True
         # make sure to update the message with the new buttons
         await inter.response.edit_message(view=self)
@@ -30,8 +30,8 @@ class MyView(disnake.ui.View):
         # Prevents on_timeout from being triggered after the buttons are disabled
         self.stop()
 
-    @disnake.ui.button(label="Click to remove the view", style=disnake.ButtonStyle.red)
-    async def remove(self, button: disnake.ui.Button, interaction: disnake.MessageInteraction):
+    @discord.ui.button(label="Click to remove the view", style=discord.ButtonStyle.red)
+    async def remove(self, button: discord.ui.Button, interaction: discord.MessageInteraction):
         # view = None removes the view
         await inter.response.edit_message(view=None)
 

@@ -3,11 +3,11 @@ from __future__ import annotations
 from pprint import pformat
 from typing import Optional, Tuple
 
-import disnake
-from disnake.ext import commands
+import discord
+from discord.ext import commands
 
 
-def injected(user: disnake.User, channel: disnake.TextChannel):
+def injected(user: discord.User, channel: discord.TextChannel):
     """This description should not be shown
 
     Parameters
@@ -27,7 +27,7 @@ class PrefixConverter:
         self.prefix = prefix
         self.suffix = suffix
 
-    def __call__(self, inter: disnake.CommandInteraction, a: str = "init"):
+    def __call__(self, inter: discord.CommandInteraction, a: str = "init"):
         return self.prefix + a + self.suffix
 
 
@@ -37,7 +37,7 @@ class HopeToGod:
         self.discriminator = discriminator
 
     @commands.converter_method
-    async def convert(cls, inter: disnake.CommandInteraction, user: disnake.User):
+    async def convert(cls, inter: discord.CommandInteraction, user: discord.User):
         return cls(user.name, user.discriminator)
 
     def __repr__(self) -> str:
@@ -55,7 +55,7 @@ class PerhapsThis:
 
 @commands.register_injection
 async def perhaps_this_is_it(
-    disc_channel: disnake.TextChannel = commands.Param(lambda i: i.channel),
+    disc_channel: discord.TextChannel = commands.Param(lambda i: i.channel),
     large: int = commands.Param(0, large=True),
 ) -> PerhapsThis:
     """This description should not be shown
@@ -85,7 +85,7 @@ class InjectionSlashCommands(commands.Cog):
     @commands.slash_command()
     async def injection_command(
         self,
-        inter: disnake.CommandInteraction,
+        inter: discord.CommandInteraction,
         sqrt: Optional[float] = commands.Param(None, converter=lambda i, x: x ** 0.5),
         prefixed: str = commands.Param(converter=PrefixConverter("__", "__")),
         other: Tuple[int, str] = commands.inject(injected),
@@ -105,7 +105,7 @@ class InjectionSlashCommands(commands.Cog):
     @commands.slash_command()
     async def discerned_injections(
         self,
-        inter: disnake.CommandInteraction,
+        inter: discord.CommandInteraction,
         perhaps: PerhapsThis,
         god: HopeToGod = None,
     ):

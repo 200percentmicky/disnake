@@ -7,7 +7,7 @@ with open("requirements.txt", encoding="utf-8") as f:
     requirements = f.read().splitlines()
 
 version = ""
-with open("disnake/__init__.py", encoding="utf-8") as f:
+with open("discord/__init__.py", encoding="utf-8") as f:
     version = re.search(r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]', f.read(), re.MULTILINE).group(1)  # type: ignore
 
 if not version:
@@ -53,18 +53,18 @@ extras_require = {
     "discord": ["discord-disnake"],
 }
 
-packages = [
-    "disnake",
-    "disnake.types",
-    "disnake.ui",
-    "disnake.webhook",
-    "disnake.interactions",
-    "disnake.ext.commands",
-    "disnake.ext.tasks",
+packages = [ # This is 'disnake', but using 'discord' instead. ...I probably might not need to change this...?
+    "discord",
+    "discord.types",
+    "discord.ui",
+    "discord.webhook",
+    "discord.interactions",
+    "discord.ext.commands",
+    "discord.ext.tasks",
 ]
 
 setup(
-    name="disnake",
+    name="discord", # This is 'disnake', but using 'discord' instead. ...I probably might not need to change this...?
     author="Rapptz, EQUENOS",
     url="https://github.com/DisnakeDev/disnake",
     project_urls={

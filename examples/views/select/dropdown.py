@@ -1,24 +1,24 @@
 import typing
 
-import disnake
-from disnake.ext import commands
+import discord
+from discord.ext import commands
 
 
 # Defines a custom Select containing colour options
 # that the user can choose. The callback function
 # of this class is called when the user changes their choice
-class Dropdown(disnake.ui.Select):
+class Dropdown(discord.ui.Select):
     def __init__(self):
 
         # Set the options that will be presented inside the dropdown
         options = [
-            disnake.SelectOption(
+            discord.SelectOption(
                 label="Red", description="Your favourite colour is red", emoji="🟥"
             ),
-            disnake.SelectOption(
+            discord.SelectOption(
                 label="Green", description="Your favourite colour is green", emoji="🟩"
             ),
-            disnake.SelectOption(
+            discord.SelectOption(
                 label="Blue", description="Your favourite colour is blue", emoji="🟦"
             ),
         ]
@@ -33,7 +33,7 @@ class Dropdown(disnake.ui.Select):
             options=options,
         )
 
-    async def callback(self, interaction: disnake.MessageInteraction):
+    async def callback(self, interaction: discord.MessageInteraction):
         # Use the interaction object to send a response message containing
         # the user's favourite colour or choice. The self object refers to the
         # Select object, and the values attribute gets a list of the user's
@@ -41,7 +41,7 @@ class Dropdown(disnake.ui.Select):
         await interaction.response.send_message(f"Your favourite colour is {self.values[0]}")
 
 
-class DropdownView(disnake.ui.View):
+class DropdownView(discord.ui.View):
     def __init__(self):
         super().__init__()
 

@@ -1,5 +1,5 @@
-import disnake
-from disnake.ext import commands
+import discord
+from discord.ext import commands
 
 
 class CounterBot(commands.Bot):
@@ -12,17 +12,17 @@ class CounterBot(commands.Bot):
 
 
 # Define a simple View that gives us a counter button
-class Counter(disnake.ui.View):
+class Counter(discord.ui.View):
 
     # Define the actual button
     # When pressed, this increments the number displayed until it hits 5.
     # When it hits 5, the counter button is disabled and it turns green.
     # note: The name of the function does not matter to the library
-    @disnake.ui.button(label="0", style=disnake.ButtonStyle.red)
-    async def count(self, button: disnake.ui.Button, interaction: disnake.MessageInteraction):
+    @discord.ui.button(label="0", style=discord.ButtonStyle.red)
+    async def count(self, button: discord.ui.Button, interaction: discord.MessageInteraction):
         number = int(button.label) if button.label else 0
         if number + 1 >= 5:
-            button.style = disnake.ButtonStyle.green
+            button.style = discord.ButtonStyle.green
             button.disabled = True
         button.label = str(number + 1)
 

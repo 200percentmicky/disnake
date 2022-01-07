@@ -27,7 +27,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Type, TypeVar, Union
 
-import disnake.abc
+import discord.abc
 
 from .asset import Asset
 from .colour import Colour
@@ -398,7 +398,7 @@ class ClientUser(BaseUser):
         return ClientUser(state=self._state, data=data)
 
 
-class User(BaseUser, disnake.abc.Messageable):
+class User(BaseUser, discord.abc.Messageable):
     """Represents a Discord user.
 
     .. container:: operations

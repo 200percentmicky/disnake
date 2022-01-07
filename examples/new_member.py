@@ -1,9 +1,9 @@
 # This example requires the 'members' privileged intents
 
-import disnake
+import discord
 
 
-class MyClient(disnake.Client):
+class MyClient(discord.Client):
     async def on_ready(self):
         print(f"Logged in as {self.user} (ID: {self.user.id})")
         print("------")
@@ -15,7 +15,7 @@ class MyClient(disnake.Client):
             await guild.system_channel.send(to_send)
 
 
-intents = disnake.Intents.default()
+intents = discord.Intents.default()
 intents.members = True
 
 client = MyClient(intents=intents)
